@@ -1,0 +1,16 @@
+case 'GET_FORMDATA':
+		$projectId = $_REQUEST['projectId'];
+		$stageId = $_REQUEST['stageId'];
+		$pharmId = $_REQUEST['pharmId'];
+		
+		$sql = "call data_getFormRows (?, ?, ?);";
+		$result = $db_connection->prepare($sql);
+		$result->bind_param('iii', $projectId, $stageId, $pharmId);
+		$result->execute();
+		
+		$result->bind_result($id, $name, $field, $value);
+
+		$obj = new stdClass();
+		$prev = 0;
+		$element = array();
+		$obj->rows = array();
